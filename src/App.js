@@ -1,23 +1,24 @@
 import React from 'react';
+import { Router as Router, Route, Switch } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import './App.css';
+
 import "bulma/css/bulma.css";
+import 'react-quill/dist/quill.snow.css';
+
+import { Login, RequestList } from './views'
+
+const history = createBrowserHistory();
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router history={history}>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/requests" component={RequestList} />
+        </Switch>
+      </Router>
     </div>
   );
 }
