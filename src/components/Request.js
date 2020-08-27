@@ -1,12 +1,14 @@
 import React from 'react'
 import { Card } from './index'
 
-export default function({request}) {
+export default function({ request }) {
   return (
     <div>
       <Card
-        title="asd"
-        description="asdasd"
+        title={request.title}
+        description={request.description}
+        author={request.author}
+        comments={request.comments}
       />
     </div>
   );

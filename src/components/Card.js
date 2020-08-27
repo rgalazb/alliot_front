@@ -1,40 +1,30 @@
 import React from 'react'
+import { Comments } from './index'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
 
-export default function({ title, description, likes = 0, disLikes = 0}) {
+export default function({ title, author, description, comments, likes = 0, disLikes = 0}) {
+  const richDescription = { __html: description }
   return (
     <div className="card mt-6">
       <header className="card-header">
         <p className="card-header-title">
-          {title}
+          { title } <small className="ml-1"><em> por { author } </em> </small>
         </p>
-        <span className="icon">
-          <i className="fas fa-angle-down" aria-hidden="true"></i>
-        </span>
       </header>
       <div className="card-content">
-        <div className="content">
-          {description}
+        <div className="content" dangerouslySetInnerHTML={richDescription}>
         </div>
       </div>
       <footer className="card-footer">
         <a href="#" className="card-footer-item"> {likes} <FontAwesomeIcon icon={faThumbsUp} /> </a>
         <a href="#" className="card-footer-item"> {disLikes} <FontAwesomeIcon icon={faThumbsDown} /> </a>
       </footer>
-      <article className="media">
-        <div className="media-content">
-          <div className="content">
-            <p>
-              <strong>Barbara Middleton</strong>
-              <br/>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
-              <br/>
-            </p>
-          </div>
+        {comments.map(comment =>
+        <div>
+          <Comments key={`c-${comment.id}`} author={comment.author} content={comment.content}/>
         </div>
-      </article>
-
+        )}
       <article className="media">
         <div className="media-content">
           <div className="field">

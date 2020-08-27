@@ -5,9 +5,7 @@ let Service = {
     return new Promise((resolve, reject) => {
       axios
         .post("/login", body, config)
-        .then((response) => {
-          console.log(response)
-          resolve(response)})
+        .then((response) => resolve(response))
         .catch((err) => reject(err));
     });
   },

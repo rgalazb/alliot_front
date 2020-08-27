@@ -11,7 +11,6 @@ function RequestList() {
     RequestService
       .getRequests(getToken())
       .then(({ data }) => {
-        console.log(data)
         setRequests(data);
       })
       .catch((err) => console.log(err));
@@ -23,7 +22,9 @@ function RequestList() {
         <Columns>
           <Column offset="3" size="half">
             <RequestForm />
-            <Request />
+            {requests.map(request => 
+              <Request key={`r-${request.id}`} request={request}/>
+            )}
           </Column>
         </Columns>
       </Container>
