@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
+import * as authActions from "../actions/authActions";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Container, Box, Column, Columns } from '../components'
 
 function Login() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) history.push('/requests');
+  }, [isAuthenticated])
 
   const formik = useFormik({
     initialValues: {
@@ -26,6 +36,7 @@ function Login() {
         email,
         password,
       };
+      dispatch(authActions.login(user));
       resetForm();
     },
   });
@@ -69,6 +80,7 @@ function Login() {
                   >
                     Log In
                   </button>
+                  {}
                 </div>
               </form>
             </Box>

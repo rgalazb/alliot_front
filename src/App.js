@@ -1,6 +1,8 @@
 import React from 'react';
 import { Router as Router, Route, Switch } from "react-router-dom";
+import { Provider } from 'react-redux';
 import { createBrowserHistory } from "history";
+import store from './store';
 import './App.css';
 
 import "bulma/css/bulma.css";
@@ -12,14 +14,16 @@ const history = createBrowserHistory();
 
 function App() {
   return (
-    <div className="App">
-      <Router history={history}>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/requests" component={RequestList} />
-        </Switch>
-      </Router>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Router history={history}>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/requests" component={RequestList} />
+          </Switch>
+        </Router>
+      </div>
+    </Provider>
   );
 }
 

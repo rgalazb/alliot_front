@@ -56,6 +56,7 @@ export default function() {
                   >
                     Publicar
                   </button>
+                    {description}
                 </div>
               </form>
             </Box>

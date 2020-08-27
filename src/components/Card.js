@@ -38,7 +38,7 @@ export default function({ title, description, likes = 0, disLikes = 0}) {
       <article className="media">
         <div className="media-content">
           <div className="field">
-            <p className="control">
+            <div className="control">
               <div className="field">
                 <div className="control">
                   <input
@@ -50,7 +50,7 @@ export default function({ title, description, likes = 0, disLikes = 0}) {
                   />
                 </div>
               </div>
-            </p>
+            </div>
           </div>
         </div>
         <nav className="level">
