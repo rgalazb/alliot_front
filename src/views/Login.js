@@ -1,18 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import * as authActions from "../actions/authActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Container, Box, Column, Columns } from '../components'
+import { Container, Box, Column, Columns } from "../components";
 
 function Login() {
-  const history = useHistory();
   const dispatch = useDispatch();
+  const history = useHistory();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-  useEffect(() => {
-    if (isAuthenticated) history.push('/requests');
-  }, [isAuthenticated])
+  const erroMessage = useSelector((state) => state.auth.erroMessage);
 
   const formik = useFormik({
     initialValues: {
@@ -25,12 +22,11 @@ function Login() {
         email,
         password,
       };
-      dispatch(authActions.login(user));
+      dispatch(authActions.login({...user, history}));
       resetForm();
     },
   });
   return (
-    <div>
       <Container>
         <Columns>
           <Column offset="5" size="3">
@@ -69,14 +65,23 @@ function Login() {
                   >
                     Log In
                   </button>
-                  {}
                 </div>
               </form>
             </Box>
           </Column>
         </Columns>
+         {erroMessage &&
+          <Columns>
+            <Column offset="5" size="3">
+              <article className="message is-danger">
+                <div className="message-body">
+                  {erroMessage}
+                </div>
+              </article>
+            </Column>
+          </Columns>
+          }
       </Container>
-    </div>
   );
 }
 

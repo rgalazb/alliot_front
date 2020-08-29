@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import RequestService from '../services/RequestService'
 import getToken from '../utils/getToken'
-import { RequestForm, Request, Container, Column, Columns, Box } from '../components'
+import { RequestForm, Request, Container, Column, Columns } from '../components'
 
 function RequestList() {
   const [requests, setRequests] = useState([]);
-
   useEffect(() => {
     RequestService
       .getRequests(getToken())
@@ -16,7 +15,6 @@ function RequestList() {
   }, [])
 
   const handleClick = function(filter) {
-    console.log(filter)
     switch(filter) {
       case 'likes':
         setRequests([...requests.sort(((prev, curr) => curr.likes - prev.likes))])
@@ -31,12 +29,14 @@ function RequestList() {
          return 1
         }))])
         return;
+      default:
+        return;
     }
-    console.log(requests)
   }
 
   return (
     <div>
+      {console.log('asdasd')}
       <Container>
         <Columns>
           <Column offset="3" size="half">

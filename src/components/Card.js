@@ -31,7 +31,7 @@ export default function(props) {
         .postComment({ comment: {content, request_id: requestId }}, getToken())
         .then(({ status, data }) => {
           addRequest(requests.map(request =>
-            request.id == requestId ? { ...request, comments: [...request.comments, data]} : { ...request }))
+            request.id === requestId ? { ...request, comments: [...request.comments, data]} : { ...request }))
         })
         .catch((err) => console.log(err));
     },
@@ -43,7 +43,7 @@ export default function(props) {
       .then(({ status, data }) => {
         if (status === 200)
           addRequest(requests.map(request =>
-            request.id == requestId 
+            request.id === requestId 
             ?  {
                 ...request, 
                 likes: kind === 'like' ? (request.likes + 1) : request.likes,

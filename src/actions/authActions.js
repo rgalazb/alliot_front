@@ -2,9 +2,10 @@ import userService from "../services/UserService";
 
 import {
   LOGIN_SUCCES,
+  LOGIN_FAIL,
 } from "./types";
 
-export const login = ({ email, password }) => (dispatch) => {
+export const login = ({ email, password, history }) => (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -15,17 +16,23 @@ export const login = ({ email, password }) => (dispatch) => {
 
   userService
     .postLogin(body, config)
-    .then((response) =>
+    .then(({ data, headers, status }) => {
+      history.push('/requests')
       dispatch({
         type: LOGIN_SUCCES,
-        payload: { ...response.data, ...response.headers },
-        id: "LOGIN_SUCCES",
+        payload: { ...data, ...headers },
       })
-    )
-    .catch((err) => {
-      console.log(err);
+    })
+    .catch(() => {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: {
+          msg: 'Error al iniciar sessión'
+        },
+      })
     });
 };
+
 
 export const tokenConfig = (getState) => {
   const token = getState().auth.token;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router as Router, Route, Switch } from "react-router-dom";
+import {  Router, Route, Switch } from "react-router-dom";
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from "history";
 import store from './store';
@@ -15,14 +15,12 @@ const history = createBrowserHistory();
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
-        <Router history={history}>
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/requests" component={RequestList} />
-          </Switch>
-        </Router>
-      </div>
+      <Router history={history}>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/requests" component={RequestList} />
+        </Switch>
+      </Router>
     </Provider>
   );
 }
