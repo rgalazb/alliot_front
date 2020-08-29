@@ -8,14 +8,15 @@ import './App.css';
 import "bulma/css/bulma.css";
 import 'react-quill/dist/quill.snow.css';
 
-import { Login, RequestList } from './views'
-
+import { Login, RequestList, SignUp } from './views'
+import { Nav } from './components'
 const history = createBrowserHistory();
 
 function App() {
   return (
     <Provider store={store}>
       <Router history={history}>
+        <Nav />
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/requests" component={RequestList} />
