@@ -54,8 +54,6 @@ export default function(props) {
       .catch((err) => console.log(err));
   }
 
-
- 
   return (
     <div className="card mt-6">
       <header className="card-header">
