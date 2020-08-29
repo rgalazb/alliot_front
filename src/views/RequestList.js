@@ -6,7 +6,6 @@ import { RequestForm, Request, Container, Column, Columns, Box } from '../compon
 function RequestList() {
   const [requests, setRequests] = useState([]);
 
-
   useEffect(() => {
     RequestService
       .getRequests(getToken())
@@ -21,9 +20,9 @@ function RequestList() {
       <Container>
         <Columns>
           <Column offset="3" size="half">
-            <RequestForm />
+            <RequestForm requests={requests} addRequest={setRequests} />
             {requests.map(request => 
-              <Request key={`r-${request.id}`} request={request}/>
+               <Request key={`r-${request.id}`} request={request}/>
             )}
           </Column>
         </Columns>

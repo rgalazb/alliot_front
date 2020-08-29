@@ -21,9 +21,7 @@ export default function({ title, author, description, comments, likes = 0, disLi
         <a href="#" className="card-footer-item"> {disLikes} <FontAwesomeIcon icon={faThumbsDown} /> </a>
       </footer>
         {comments.map(comment =>
-        <div>
           <Comments key={`c-${comment.id}`} author={comment.author} content={comment.content}/>
-        </div>
         )}
       <article className="media">
         <div className="media-content">

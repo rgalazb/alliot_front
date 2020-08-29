@@ -1,65 +1,63 @@
 import React, { useState } from 'react'
 import { useFormik } from "formik";
+import RequestService from '../services/RequestService';
+import getToken from '../utils/getToken';
 import ReactQuill from 'react-quill';
-import { Container, Column, Columns, Box } from './index'
-import * as Yup from "yup";
+import { Box } from './index'
 
-export default function() {
+export default function({ requests, addRequest }) {
 
   const [description, setDescription] = useState('');
-
 
   const formik = useFormik({
     initialValues: {
       title: '',
     },
-    validationSchema: Yup.object().shape({
-      title: Yup.string()
-        .min(1, "Must have 1 min character")
-        .max(50)
-        .required("can't be empty"),
-    }),
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: ({ title }, { resetForm }) => {
       setDescription('');
       resetForm();
+      RequestService
+        .postRequest({ request: {title, description }}, getToken())
+        .then(({ status, data }) => {
+          addRequest([{ ...data }, ...requests])
+        })
+        .catch((err) => console.log(err));
     },
   });
   return (
     <div>
-
-            <Box>
-            <form onSubmit={formik.handleSubmit}>
-                <div className="field">
-                  <div className="control">
-                    <input
-                      placeholder="Título"
-                      type="text"
-                      name="title"
-                      autoComplete="off"
-                      className="input"
-                      onChange={formik.handleChange}
-                      value={formik.values.title}
-                    />
-                  </div>
+      <Box>
+        <form onSubmit={formik.handleSubmit}>
+          <div className="field">
+            <div className="control">
+              <input
+                placeholder="Título"
+                type="text"
+                name="title"
+                autoComplete="off"
+                className="input"
+                onChange={formik.handleChange}
+                value={formik.values.title}
+                />
+              </div>
+            </div>
+            <div className="field">
+              <div className="control">
+                <div>
+                  <ReactQuill theme="snow" value={description} onChange={setDescription}/>
                 </div>
-                <div className="field">
-                  <div className="control">
-                    <div>
-                      <ReactQuill theme="snow" value={description} onChange={setDescription}/>
-                    </div>
-                  </div>
-                </div>
-                <div className="control">
-                  <button
-                    className={"button is-primary"}
-                    type="submit"
-                  >
-                    Publicar
-                  </button>
-                    {description}
-                </div>
-              </form>
-            </Box>
-    </div>
+              </div>
+            </div>
+            <div className="control">
+              <button
+                className={"button is-primary"}
+                type="submit"
+              >
+                Publicar
+              </button>
+            </div>
+          </form>
+        </Box>
+      </div>
   );
 }
