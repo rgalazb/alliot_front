@@ -5,8 +5,6 @@ const getToken = () => {
       "Content-type": "applications/json",
     },
   };
-  console.log('token')
-  console.log(token)
   if (token) {
     config.headers["Authorization"] = token;
   }

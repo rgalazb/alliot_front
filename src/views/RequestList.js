@@ -20,7 +20,6 @@ function RequestList() {
         setRequests([...requests.sort(((prev, curr) => curr.likes - prev.likes))])
         return;
       case 'dislikes':
-        console.log('asdasd')
         setRequests([...requests.sort(((prev, curr) => curr.dislikes - prev.dislikes))])
         return;
       case 'title':
@@ -36,7 +35,6 @@ function RequestList() {
 
   return (
     <div>
-      {console.log('asdasd')}
       <Container>
         <Columns>
           <Column offset="3" size="half">

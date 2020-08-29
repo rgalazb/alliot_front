@@ -8,7 +8,6 @@ import { Container, Box, Column, Columns } from "../components";
 function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const erroMessage = useSelector((state) => state.auth.erroMessage);
 
   const formik = useFormik({

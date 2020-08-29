@@ -11,8 +11,6 @@ let Service = {
   },
   postRequest: function(body, config) {
     return new Promise((resolve, reject) => {
-      console.log('body')
-      console.log(body)
       axios
         .post("/requests", null, { params: { ...body }, ...config })
         .then((response) => {

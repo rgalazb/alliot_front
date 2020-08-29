@@ -20,6 +20,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/requests" component={RequestList} />
+          <Route exact path="/signup" component={SignUp} />
         </Switch>
       </Router>
     </Provider>
