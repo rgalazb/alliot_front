@@ -1,6 +1,7 @@
 import React from 'react'
 import { Comments } from './index'
 import CommentService from '../services/CommentService';
+import ReactionService from '../services/ReactionService';
 import getToken from '../utils/getToken';
 import { useFormik } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,8 +13,10 @@ export default function(props) {
     description,
     comments,
     requestId,
+    addRequest,
+    requests,
     likes = 0,
-    disLikes = 0 
+    dislikes = 0 
   } = props
 
   const richDescription = { __html: description }
@@ -27,13 +30,32 @@ export default function(props) {
       CommentService
         .postComment({ comment: {content, request_id: requestId }}, getToken())
         .then(({ status, data }) => {
-          const {requests, addRequest } = props
           addRequest(requests.map(request =>
             request.id == requestId ? { ...request, comments: [...request.comments, data]} : { ...request }))
         })
         .catch((err) => console.log(err));
     },
   });
+
+  const handleClick = function(kind) {
+    ReactionService
+      .postReaction({ reaction: {kind, request_id: requestId }}, getToken())
+      .then(({ status, data }) => {
+        if (status === 200)
+          addRequest(requests.map(request =>
+            request.id == requestId 
+            ?  {
+                ...request, 
+                likes: kind === 'like' ? (request.likes + 1) : request.likes,
+                dislikes: kind === 'dislike' ? (request.dislikes + 1) : request.dislikes,
+              }
+            :  { ...request }))
+        })
+      .catch((err) => console.log(err));
+  }
+
+
+ 
   return (
     <div className="card mt-6">
       <header className="card-header">
@@ -46,8 +68,14 @@ export default function(props) {
         </div>
       </div>
       <footer className="card-footer">
-        <a href="#" className="card-footer-item"> {likes} <FontAwesomeIcon icon={faThumbsUp} /> </a>
-        <a href="#" className="card-footer-item"> {disLikes} <FontAwesomeIcon icon={faThumbsDown} /> </a>
+        <a className="card-footer-item" onClick={() => handleClick('like')}>
+          <span className="mr-2">{likes}</span>
+          <FontAwesomeIcon icon={faThumbsUp} />
+        </a>
+        <a className="card-footer-item" onClick={() => handleClick('dislike')}>
+          <span className="mr-2">{dislikes}</span>
+          <FontAwesomeIcon icon={faThumbsDown} />
+        </a>
       </footer>
         {comments.map(comment =>
           <Comments key={`c-${comment.id}`} author={comment.author} content={comment.content}/>
