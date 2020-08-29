@@ -3,7 +3,6 @@ import { useFormik } from "formik";
 import * as authActions from "../actions/authActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import * as Yup from "yup";
 import { Container, Box, Column, Columns } from '../components'
 
 function Login() {
@@ -20,16 +19,6 @@ function Login() {
       email: '',
       password: '',
     },
-    validationSchema: Yup.object().shape({
-      email: Yup.string()
-        .min(1, "Must have 1 min character")
-        .max(50)
-        .required("can't be empty"),
-      password: Yup.string()
-        .min(1, "Must have 1 min character")
-        .max(50)
-        .required("can't be empty"),
-    }),
     onSubmit: (values, { resetForm }) => {
       const { email, password } = values;
       const user = {
