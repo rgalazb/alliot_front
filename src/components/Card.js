@@ -101,7 +101,7 @@ export default function(props) {
         <nav className="level">
           <div className="level-left">
             <div className="level-item">
-              <button className="button is-info" onClick={formik.handleSubmit}>
+              <button disabled={!formik.values.content} className={`button is-info`} onClick={formik.handleSubmit}>
                 Comentar
               </button>
             </div>
