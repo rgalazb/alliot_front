@@ -44,7 +44,6 @@ function Navbar() {
                     <button className="button is-success ml-3" onClick={() => handleClick('/')}>Inicia Sesión</button>
                   </div>
               }
-
             </div>
           </div>
           <div className="navbar-end">

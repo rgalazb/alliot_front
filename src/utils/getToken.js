@@ -1,3 +1,4 @@
+// funcion que nos ayuda a obtener el token para realizar request al backend
 const getToken = () => {
   const token = localStorage.getItem("token");
   const config = {

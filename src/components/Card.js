@@ -19,6 +19,7 @@ export default function(props) {
     dislikes = 0 
   } = props
 
+  // TODO: encontrar una manera de desplegar rich text a traves de un sanitizador
   const richDescription = { __html: description }
 
   const formik = useFormik({
@@ -42,6 +43,7 @@ export default function(props) {
       .postReaction({ reaction: {kind, request_id: requestId }}, getToken())
       .then(({ status, data }) => {
         if (status === 200)
+          // agregar un like a la peticion que corresponde
           addRequest(requests.map(request =>
             request.id === requestId 
             ?  {

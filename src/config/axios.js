@@ -1,3 +1,4 @@
+// cualquier configuracion local relacionada a axios va en este archivo
 import axios from 'axios';
 
 const axiosClient = axios.create({
