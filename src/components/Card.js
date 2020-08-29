@@ -66,14 +66,14 @@ export default function(props) {
         </div>
       </div>
       <footer className="card-footer">
-        <a className="card-footer-item" onClick={() => handleClick('like')}>
+        <button className="card-footer-item button" onClick={() => handleClick('like')}>
           <span className="mr-2">{likes}</span>
           <FontAwesomeIcon icon={faThumbsUp} />
-        </a>
-        <a className="card-footer-item" onClick={() => handleClick('dislike')}>
+        </button>
+        <button className="card-footer-item button" onClick={() => handleClick('dislike')}>
           <span className="mr-2">{dislikes}</span>
           <FontAwesomeIcon icon={faThumbsDown} />
-        </a>
+        </button>
       </footer>
         {comments.map(comment =>
           <Comments key={`c-${comment.id}`} author={comment.author} content={comment.content}/>
@@ -101,9 +101,9 @@ export default function(props) {
         <nav className="level">
           <div className="level-left">
             <div className="level-item">
-              <a className="button is-info" onClick={formik.handleSubmit}>
+              <button className="button is-info" onClick={formik.handleSubmit}>
                 Comentar
-              </a>
+              </button>
             </div>
           </div>
         </nav>
