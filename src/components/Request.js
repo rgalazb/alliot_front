@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card } from './index'
 
-export default function({ request }) {
+export default function({ request, requests, addRequest }) {
   return (
     <div>
       <Card
@@ -9,6 +9,9 @@ export default function({ request }) {
         description={request.description}
         author={request.author}
         comments={request.comments}
+        requests={requests}
+        addRequest={addRequest}
+        requestId={request.id}
       />
     </div>
   );

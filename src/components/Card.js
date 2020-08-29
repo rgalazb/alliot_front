@@ -1,10 +1,39 @@
 import React from 'react'
 import { Comments } from './index'
+import CommentService from '../services/CommentService';
+import getToken from '../utils/getToken';
+import { useFormik } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
 
-export default function({ title, author, description, comments, likes = 0, disLikes = 0}) {
+export default function(props) {
+  const { title,
+    author,
+    description,
+    comments,
+    requestId,
+    likes = 0,
+    disLikes = 0 
+  } = props
+
   const richDescription = { __html: description }
+
+  const formik = useFormik({
+    initialValues: {
+      content: '',
+    },
+    onSubmit: ({ content }, { resetForm }) => {
+      resetForm();
+      CommentService
+        .postComment({ comment: {content, request_id: requestId }}, getToken())
+        .then(({ status, data }) => {
+          const {requests, addRequest } = props
+          addRequest(requests.map(request =>
+            request.id == requestId ? { ...request, comments: [...request.comments, data]} : { ...request }))
+        })
+        .catch((err) => console.log(err));
+    },
+  });
   return (
     <div className="card mt-6">
       <header className="card-header">
@@ -32,8 +61,10 @@ export default function({ title, author, description, comments, likes = 0, disLi
                   <input
                     placeholder="Deja un comentario..."
                     type="text"
-                    name="title"
+                    name="content"
                     autoComplete="off"
+                    onChange={formik.handleChange}
+                    value={formik.values.content}
                     className="input"
                   />
                 </div>
@@ -44,7 +75,9 @@ export default function({ title, author, description, comments, likes = 0, disLi
         <nav className="level">
           <div className="level-left">
             <div className="level-item">
-              <a className="button is-info">Comentar</a>
+              <a className="button is-info" onClick={formik.handleSubmit}>
+                Comentar
+              </a>
             </div>
           </div>
         </nav>

@@ -22,7 +22,7 @@ function RequestList() {
           <Column offset="3" size="half">
             <RequestForm requests={requests} addRequest={setRequests} />
             {requests.map(request => 
-               <Request key={`r-${request.id}`} request={request}/>
+               <Request key={`r-${request.id}`} request={request} requests={requests} addRequest={setRequests} />
             )}
           </Column>
         </Columns>
